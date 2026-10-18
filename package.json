@@ -1,0 +1,17 @@
+{
+  "name": "wisesell-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-powered business platform for Ethiopia and East Africa",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.58.0"
+  },
+  "devDependencies": {
+    "vite": "7.1.7"
+  }
+}
