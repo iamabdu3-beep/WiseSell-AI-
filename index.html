@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123c32">
+  <title>WiseSell AI | Business Growth Platform</title>
+  <style>
+    :root {
+      --green: #123c32;
+      --lime: #c9f36a;
+      --bg: #f5f7f4;
+      --white: #fff;
+      --text: #20352d;
+      --muted: #708078;
+      --border: #e3e9e4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: var(--green);
+      color: white;
+      padding: 22px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand { font-size: 24px; font-weight: 800; }
+    .brand span { color: var(--lime); }
+    .badge {
+      border: 1px solid #6d8d7d;
+      border-radius: 30px;
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+    main { max-width: 1100px; margin: auto; padding: 28px 18px; }
+    .welcome { margin-bottom: 24px; }
+    h1 { font-size: clamp(26px, 5vw, 38px); margin-bottom: 8px; }
+    p { line-height: 1.6; }
+    .muted { color: var(--muted); }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 22px 0;
+    }
+    .card, .panel {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .metric-label { color: var(--muted); font-size: 13px; }
+    .metric-value { font-size: 27px; font-weight: 800; margin-top: 12px; }
+    .section-title { margin: 30px 0 14px; }
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    label { display: block; font-size: 14px; font-weight: 700; margin: 14px 0 7px; }
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d5dfd7;
+      border-radius: 9px;
+      font: inherit;
+      background: white;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 16px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .primary { background: var(--green); color: white; margin-top: 12px; }
+    .secondary { background: var(--lime); color: var(--green); margin-top: 12px; }
+    .output {
+      background: #f3f7f2;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 15px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      min-height: 45px;
+    }
+    .platforms { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .platform {
+      background: #eef3ee;
+      padding: 8px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    footer { text-align: center; padding: 25px; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">WiseSell <span>AI</span></div>
+    <div class="badge">BUSINESS GROWTH PLATFORM</div>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <p class="muted">YOUR BUSINESS, SMARTER</p>
+      <h1>Grow your business with AI.</h1>
+      <p class="muted">Manage sales, understand your business, and prepare marketing content in one place.</p>
+    </section>
+
+    <section class="metrics" aria-label="Business overview">
+      <div class="card">
+        <div class="metric-label">Total Sales (ETB)</div>
+        <div class="metric-value" id="sales">0.00</div>
+      </div>
+      <div class="card">
+        <div class="metric-label">Business Expenses (ETB)</div>
+        <div class="metric-value" id="expenses">0.00</div>
+      </div>
+      <div class="card">
+        <div class="metric-label">Estimated Profit (ETB)</div>
+        <div class="metric-value" id="profit">0.00</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Record a business transaction</h2>
+      <p class="muted">Enter a sale or expense to update this demo dashboard.</p>
+      <label for="type">Transaction type</label>
+      <select id="type">
+        <option value="sale">Sale / Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <label for="amount">Amount (ETB)</label>
+      <input id="amount" type="number" min="0.01" step="0.01" placeholder="e.g. 1500">
+      <button class="primary" onclick="recordTransaction()">Record transaction</button>
+      <div class="output" id="transactionMessage" aria-live="polite">Your transactions will appear here.</div>
+    </section>
+
+    <h2 class="section-title">AI business tools</h2>
+    <section class="tools">
+      <div class="panel">
+        <h2>AI Business Assistant</h2>
+        <p class="muted">Prepare business questions and receive a basic demo response.</p>
+        <label for="question">Your business question</label>
+        <textarea id="question" placeholder="How can I increase my sales?"></textarea>
+        <button class="primary" onclick="askAssistant()">Ask assistant</button>
+        <div class="output" id="assistantOutput" aria-live="polite">Your answer will appear here.</div>
+      </div>
+
+      <div class="panel">
+        <h2>AI Sales & Marketing</h2>
+        <p class="muted">Create a starting draft for your product promotion.</p>
+        <label for="product">Product or service</label>
+        <input id="product" placeholder="e.g. Ethiopian coffee">
+        <label for="audience">Target customers</label>
+        <input id="audience" placeholder="e.g. local coffee lovers">
+        <label for="platform">Marketing platform</label>
+        <select id="platform">
+          <option>Facebook</option>
+          <option>Instagram</option>
+          <option>Telegram</option>
+          <option>WhatsApp</option>
+          <option>TikTok</option>
+          <option>LinkedIn</option>
+          <option>X (Twitter)</option>
+        </select>
+        <button class="secondary" onclick="generateMarketing()">Generate draft</button>
+        <div class="output" id="marketingOutput" aria-live="polite">Your marketing draft will appear here.</div>
+        <button class="primary" onclick="copyMarketing()">Copy marketing draft</button>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:20px">
+      <h2>Connect your business ecosystem</h2>
+      <p class="muted">Planned integrations — external accounts are not connected yet.</p>
+      <div class="platforms">
+        <span class="platform">WhatsApp</span>
+        <span class="platform">Telegram</span>
+        <span class="platform">TikTok</span>
+        <span class="platform">Facebook</span>
+        <span class="platform">Instagram</span>
+        <span class="platform">LinkedIn</span>
+        <span class="platform">X</span>
+        <span class="platform">Supabase</span>
+        <span class="platform">OpenAI</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>WiseSell AI · Business technology for Ethiopia and East Africa</footer>
+
+  <script>
+    let sales = 0;
+    let expenses = 0;
+
+    function money(value) {
+      return value.toLocaleString("en-ET", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function refreshMetrics() {
+      document.getElementById("sales").textContent = money(sales);
+      document.getElementById("expenses").textContent = money(expenses);
+      document.getElementById("profit").textContent = money(sales - expenses);
+    }
+
+    function recordTransaction() {
+      const type = document.getElementById("type").value;
+      const amount = Number(document.getElementById("amount").value);
+      const message = document.getElementById("transactionMessage");
+
+      if (!Number.isFinite(amount) || amount <= 0) {
+        message.textContent = "Please enter an amount greater than zero.";
+        return;
+      }
+
+      if (type === "sale") sales += amount;
+      else expenses += amount;
+
+      refreshMetrics();
+      message.textContent = `${type === "sale" ? "Sale" : "Expense"} recorded: ETB ${money(amount)}. This demo stores data only in the current page session.`;
+      document.getElementById("amount").value = "";
+    }
+
+    function askAssistant() {
+      const question = document.getElementById("question").value.trim();
+      const output = document.getElementById("assistantOutput");
+
+      if (!question) {
+        output.textContent = "Please enter a business question first.";
+        return;
+      }
+
+      output.textContent =
+        "Demo guidance for your question:\n\n" +
+        "1. Review your sales and expenses.\n" +
+        "2. Identify your most profitable products.\n" +
+        "3. Ask customers what they need.\n" +
+        "4. Test a small marketing campaign and measure the results.\n\n" +
+        "Your question: " + question +
+        "\n\nNote: This is a sample response, not a live OpenAI response. Live AI will be connected through a secure backend.";
+    }
+
+    function generateMarketing() {
+      const product = document.getElementById("product").value.trim();
+      const audience = document.getElementById("audience").value.trim();
+      const platform = document.getElementById("platform").value;
+      const output = document.getElementById("marketingOutput");
+
+      if (!product || !audience) {
+        output.textContent = "Please enter both a product and target customers.";
+        return;
+      }
+
+      output.textContent =
+        `Discover ${product}!\n\n` +
+        `Made for ${audience}, ${product} is ready to be part of your day. ` +
+        `Contact us to learn more and place your order.\n\n` +
+        `#${product.replace(/[^a-zA-Z0-9]/g, "")} #Ethiopia #WiseSellAI\n\n` +
+        `Prepared as a ${platform} draft. Review all details before publishing.`;
+    }
+
+    async function copyMarketing() {
+      const text = document.getElementById("marketingOutput").textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("Marketing draft copied.");
+      } catch {
+        alert("Please select and copy the marketing text manually.");
+      }
+    }
+
+    refreshMetrics();
+  </script>
+</body>
+  </html>
